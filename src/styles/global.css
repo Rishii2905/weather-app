@@ -1,0 +1,337 @@
+/* ===== styles/global.css ===== */
+/* Layout and shared styling. Colours come from themes.css variables. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* IMPORTANT: these two variables come from themes.css */
+  background: var(--bg);
+  color: var(--text);
+  background-attachment: fixed; /* gradient stays put while scrolling */
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Glass-style card used everywhere */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 20px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.card-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.75;
+  margin-bottom: 12px;
+}
+
+/* ---------- Search ---------- */
+.search {
+  position: relative;
+}
+.search input {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--card-border);
+  background: var(--input-bg);
+  color: var(--text);
+  font-size: 1rem;
+  outline: none;
+}
+.search input::placeholder {
+  color: var(--text);
+  opacity: 0.6;
+}
+.suggestions {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 10;
+  list-style: none;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #1e293b; /* solid so text stays readable on every theme */
+  color: #f1f5f9;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+.suggestions button {
+  width: 100%;
+  text-align: left;
+  padding: 12px 18px;
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.suggestions button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.suggestions button span {
+  font-size: 0.8rem;
+  opacity: 0.65;
+}
+.suggestion-empty {
+  padding: 12px 18px;
+  opacity: 0.7;
+}
+
+/* ---------- Current weather ---------- */
+.current {
+  text-align: center;
+}
+.current h1 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+.current-sub {
+  opacity: 0.75;
+  font-size: 0.9rem;
+}
+.current-icon {
+  font-size: 4rem;
+  margin-top: 12px;
+}
+.current-temp {
+  font-size: 5.5rem;
+  font-weight: 300;
+  line-height: 1;
+}
+.current-label {
+  font-size: 1.2rem;
+  margin-top: 6px;
+}
+.current-range {
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+/* ---------- Hourly ---------- */
+.hourly-strip {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+.hour {
+  flex: 0 0 auto;
+  min-width: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.hour-time {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+.hour-icon {
+  font-size: 1.6rem;
+}
+.hour-temp {
+  font-weight: 600;
+}
+.hour-rain {
+  font-size: 0.75rem;
+  opacity: 0.75;
+}
+
+/* ---------- Daily (horizontal strip) ---------- */
+.daily-strip {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    /* IMPORTANT: snapping makes swiping stop neatly on a day card */
+    scroll-snap-type: x proximity;
+  }
+  .day-card {
+    flex: 0 0 auto;
+    min-width: 84px;
+    padding: 14px 10px;
+    border-radius: 16px;
+    border: 1px solid var(--card-border);
+    background: var(--input-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    scroll-snap-align: start;
+  }
+  .day-name {
+    font-weight: 600;
+  }
+  .day-date {
+    font-size: 0.75rem;
+    opacity: 0.65;
+  }
+  .day-icon {
+    font-size: 1.8rem;
+    margin: 4px 0;
+  }
+  .day-high {
+    font-weight: 600;
+  }
+  .day-low {
+    opacity: 0.65;
+  }
+  .day-rain {
+    font-size: 0.75rem;
+    opacity: 0.8;
+  }
+
+
+/* ---------- Details grid ---------- */
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 16px;
+}
+.detail-value {
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+.detail-note {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  margin-top: 6px;
+}
+
+/* ---------- Loading / error ---------- */
+.status {
+  text-align: center;
+  padding: 40px 20px;
+}
+.spinner {
+  width: 36px;
+  height: 36px;
+  margin: 0 auto 14px;
+  border: 4px solid var(--card-border);
+  border-top-color: var(--text);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.retry-button {
+  margin-top: 14px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1px solid var(--card-border);
+  background: var(--input-bg);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 520px) {
+  .current-temp {
+    font-size: 4.2rem;
+  }
+}
+
+
+/* ---------- Favourites ---------- */
+
+/* Row at the top of the hero card that holds the Add button (top-left) */
+.current-top {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 6px;
+  }
+  .favorite-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--card-border);
+    background: var(--input-bg);
+    color: var(--text);
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  .favorite-button.active {
+    font-weight: 600;
+  }
+  .favorite-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .favorite-star {
+    font-size: 1.1rem;
+  }
+  .favorite-button.active .favorite-star {
+    color: #f59e0b; /* gold star once saved */
+  }
+  
+  /* Saved-cities shelf under the search box */
+  .favorites-bar {
+    list-style: none;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .favorite-chip {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .favorite-chip.active {
+    border-color: var(--text);
+    font-weight: 600;
+  }
+  .favorite-chip-name,
+  .favorite-chip-remove {
+    background: none;
+    border: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+  }
+  .favorite-chip-name {
+    padding: 8px 6px 8px 14px;
+  }
+  .favorite-chip-remove {
+    padding: 8px 12px 8px 4px;
+    opacity: 0.6;
+  }
+  .favorite-chip-remove:hover {
+    opacity: 1;
+  }
